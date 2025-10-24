@@ -1,4 +1,5 @@
-Flask==3.0.3
-solana==0.30.2
-requests==2.31.0
-gunicorn==21.2.0
+flask
+solana
+solders
+spl-token
+base58
