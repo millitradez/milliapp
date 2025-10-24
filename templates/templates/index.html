@@ -1,84 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MilliApp - Crypto Trading</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MilliApp — Solana Trader</title>
   <style>
-    body {
-      background: #0b0b0b;
-      color: #eaeaea;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: linear-gradient(90deg, #2a2a72, #009ffd);
-      padding: 15px;
-      font-size: 1.6rem;
-      font-weight: bold;
-    }
-    main {
-      padding: 40px 20px;
-    }
-    .card {
-      background: #1c1c1c;
-      border-radius: 10px;
-      padding: 25px;
-      max-width: 420px;
-      margin: 0 auto 25px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    }
-    input, select, button {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border-radius: 5px;
-      border: none;
-      font-size: 1rem;
-    }
-    input, select {
-      background: #222;
-      color: #eaeaea;
-    }
-    button {
-      background: #009ffd;
-      color: white;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    button:hover {
-      background: #007bdb;
-    }
+    body { font-family: Arial, sans-serif; background: #111; color: #eee; text-align: center; }
+    h1 { color: #00ffa3; }
+    input, select, button { padding: 10px; margin: 10px; border-radius: 6px; border: none; }
+    input, select { width: 240px; }
+    button { background: #00ffa3; color: #111; font-weight: bold; cursor: pointer; }
+    button:hover { background: #00dd91; }
+    .container { margin-top: 60px; }
   </style>
 </head>
 <body>
-  <header>💠 MilliApp Trading</header>
-  <main>
-    <div class="card">
-      <h2>Simulate or Trade</h2>
-      <form action="/trade" method="post">
-        <label>Token Symbol (e.g. SOL):</label>
-        <input type="text" name="token" placeholder="SOL, USDC, etc" required>
+  <div class="container">
+    <h1>💸 MilliApp</h1>
+    <h3>Trade Solana tokens directly</h3>
+    <form id="trade-form">
+      <input type="text" id="from_token" placeholder="From token (e.g. SOL)" required><br>
+      <input type="text" id="to_token" placeholder="To token (e.g. USDC)" required><br>
+      <input type="number" id="amount" placeholder="Amount" required><br>
+      <button type="submit">Execute Trade</button>
+    </form>
 
-        <label>Action:</label>
-        <select name="action" required>
-          <option value="buy">Buy</option>
-          <option value="sell">Sell</option>
-        </select>
+    <p id="status"></p>
+  </div>
 
-        <label>Amount:</label>
-        <input type="number" step="any" name="amount" placeholder="0.1" required>
+  <script>
+    document.getElementById("trade-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const from = document.getElementById("from_token").value;
+      const to = document.getElementById("to_token").value;
+      const amount = document.getElementById("amount").value;
+      const status = document.getElementById("status");
+      status.textContent = "⏳ Sending transaction...";
 
-        <button type="submit">Execute</button>
-      </form>
-    </div>
-
-    <div class="card">
-      <h3>Current Balance</h3>
-      <p>{{ balance }} SOL</p>
-    </div>
-  </main>
+      const res = await fetch("/trade", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ from_token: from, to_token: to, amount })
+      });
+      const data = await res.json();
+      status.textContent = data.message || "✅ Transaction sent!";
+    });
+  </script>
 </body>
 </html>
