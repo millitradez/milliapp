@@ -1,7 +1,84 @@
-<!-- templates/index.html -->
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MilliApp - Crypto Trading</title>
+  <style>
+    body {
+      background: #0b0b0b;
+      color: #eaeaea;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: linear-gradient(90deg, #2a2a72, #009ffd);
+      padding: 15px;
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+    main {
+      padding: 40px 20px;
+    }
+    .card {
+      background: #1c1c1c;
+      border-radius: 10px;
+      padding: 25px;
+      max-width: 420px;
+      margin: 0 auto 25px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 5px;
+      border: none;
+      font-size: 1rem;
+    }
+    input, select {
+      background: #222;
+      color: #eaeaea;
+    }
+    button {
+      background: #009ffd;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background: #007bdb;
+    }
+  </style>
+</head>
+<body>
+  <header>💠 MilliApp Trading</header>
+  <main>
+    <div class="card">
+      <h2>Simulate or Trade</h2>
+      <form action="/trade" method="post">
+        <label>Token Symbol (e.g. SOL):</label>
+        <input type="text" name="token" placeholder="SOL, USDC, etc" required>
+
+        <label>Action:</label>
+        <select name="action" required>
+          <option value="buy">Buy</option>
+          <option value="sell">Sell</option>
+        </select>
+
+        <label>Amount:</label>
+        <input type="number" step="any" name="amount" placeholder="0.1" required>
+
+        <button type="submit">Execute</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h3>Current Balance</h3>
+      <p>{{ balance }} SOL</p>
+    </div>
+  </main>
+</body>
+</html>
