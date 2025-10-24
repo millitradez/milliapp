@@ -1,0 +1,5 @@
+flask
+solana
+spl-token
+python-dotenv
+base58
